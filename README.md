@@ -16,7 +16,9 @@ The data is first loaded into the script. It has already been cleaned by the upl
 
 Secondly, the texts are vectorized using a Tf-Idf vectorizer. The vectorizer allows for unigrams and bigrams, and converts every token into lowercase in order not to distinguish between words at the beginning and middle of a sentence, as well as to account for lack of consistent capitalization in internet texts. The most common and most rare words are discarded, retaining a maximum of 500 features. The vectorizer is saved.
 
+Third, the classifier is trained. The classifier is a neural net classifier, set to stop early if scores do not improve in order to prevent overfitting. Predictions are made on the test data, and the classifier is saved.
 
+Finally, a classification report is printed.
 
 ## Usage
 ### Prerequisites
@@ -24,16 +26,35 @@ This code was written and executed in the UCloud application's Coder Python inte
 
 ### Installations
 1. Clone this repository somewhere on your device. 
-2. The data is already contained within the ```/cds_lang_2/in``` folder.
-3. Open a terminal and navigate into the ```/cds_lang_5``` folder. Run the following lines in order to install the necessary packages and load the required language model:
+2. Download the data from https://www.kaggle.com/datasets/infamouscoder/depression-reddit-cleaned and unzip it. When writing the script, the folders were organized in the following way:
+
+- ```/cds_lang_5```
+    - ```/mdls```
+    - ```/out```
+    - ```/src```
+- ```/data```
+
+3. Open a terminal and navigate into the ```/cds_lang_5``` folder. Run the following lines in order to install the necessary packages:
         
         pip install --upgrade pip
-        python -m spacy download en_core_web_md
         python3 -m pip install -r requirements.txt
 
 ### Run the script.
-In order to run the script, make sure your current directory is still the ```/cds_lang_2``` folder. 
+In order to run the script, make sure your current directory is still the ```/cds_lang_2``` folder. Then, from command line, run:
 
-In order to run the logistic regression classifier, from command line, run:
+        python3 src/classifier.py
+        
+The vectorizer and the model can be found in  ```/cds_lang_5/mdls```. The classification reports can be found in ```/cds_lang_5/out```.
 
-        python3 src/LR.py
+## Discussion
+Overall, the classifier performed significantly better than chance. A mean accuracy of 94% was achieved, performing with equal accuracy on the depression group vs the non-depression group (although precision, as opposed to only accuracy, was greater for the detection of depression as opposed to the detection of its absence from the text). Other classifiers on the same dataset have achieved similar accuracies, the greatest being 97%.
+
+
+
+
+
+
+
+
+
+
